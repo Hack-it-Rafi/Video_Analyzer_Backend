@@ -5,43 +5,11 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
 import cookieParser from 'cookie-parser';
-import config from './app/config';
 
 const app: Application = express();
 
-const allowedOrigins = new Set(
-  [
-    'http://localhost:5173',
-    config.frontend_url,
-    ...(process.env.CORS_ORIGINS ?? '')
-      .split(',')
-      .map((origin) => origin.trim())
-      .filter(Boolean),
-  ].filter(Boolean),
-);
-
-const isAllowedOrigin = (origin: string) => {
-  if (allowedOrigins.has(origin)) {
-    return true;
-  }
-
-  return /^https:\/\/video-analyzer-frontend-[a-z0-9-]+-imamul-hossain-rafis-projects\.vercel\.app$/i.test(
-    origin,
-  );
-};
-
 const corsOptions = {
-  origin: (
-    origin: string | undefined,
-    callback: (_error: Error | null, _success?: boolean) => void,
-  ) => {
-    if (!origin || isAllowedOrigin(origin)) {
-      callback(null, true);
-      return;
-    }
-
-    callback(new Error(`Not allowed by CORS: ${origin}`));
-  },
+  origin: ['https://video-analyzer-frontend-rouge.vercel.app'],
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -84,8 +52,6 @@ app.post('/api/v1/logout', async (req: Request, res: Response) => {
     .clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-      path: '/',
     })
     .send({ success: true });
 });
