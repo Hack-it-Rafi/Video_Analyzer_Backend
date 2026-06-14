@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173', 'https://video-analyzer-frontend-rouge.vercel.app'],
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
