@@ -56,6 +56,10 @@ app.post('/api/v1/logout', async (req: Request, res: Response) => {
     .send({ success: true });
 });
 
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+
 // application routes
 app.use('/api/v1', router);
 //http://localhost:3000/api/v1/*router
