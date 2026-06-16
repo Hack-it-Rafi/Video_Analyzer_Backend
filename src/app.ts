@@ -19,6 +19,9 @@ const corsOptions = {
 // CORS must be first to handle preflight requests
 app.use(cors(corsOptions));
 
+// Explicitly handle OPTIONS preflight for all routes
+app.options('*', cors(corsOptions));
+
 // parsers
 app.use(cookieParser());
 app.use(express.json());
