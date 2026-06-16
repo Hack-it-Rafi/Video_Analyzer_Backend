@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import validateRequest from '../../middlewares/validateRequest';
-import auth from '../../middlewares/auth';
+// import auth from '../../middlewares/auth';
 import { VIDEOValidation } from './Video.validation';
 import { VIDEOControllers } from './Video.controller';
 
@@ -25,25 +25,25 @@ const upload = multer({
 
 router.post(
   '/create-video',
-  auth('admin', 'user'),
+  // auth('admin', 'user'),
   upload.single('video'),
   validateRequest(VIDEOValidation.addVIDEOSchema),
   VIDEOControllers.createVIDEO,
 );
 
-router.get('/:id', auth(), VIDEOControllers.getSingleVIDEO);
-router.get('/', auth(), VIDEOControllers.getAllVIDEOs);
+router.get('/:id', VIDEOControllers.getSingleVIDEO);
+router.get('/', VIDEOControllers.getAllVIDEOs);
 router.get(
   '/file/:fileName',
-  // auth(),
+  //
   VIDEOControllers.getVIDEOFile,
 );
 
-router.get('/:id/report', auth(), VIDEOControllers.generateVideoReport);
+router.get('/:id/report', VIDEOControllers.generateVideoReport);
 
 router.get(
   '/:id/report/stream',
-  auth(),
+
   VIDEOControllers.generateVideoReportStream,
 );
 
